@@ -1,21 +1,22 @@
 let answer = document.getElementById('answer');
-let attempt = document.getElementById('attempt');
+let attemptCount = document.getElementById('attempt');
 
 function guess() {
-  let input = document.getElementById('user-guess');
+  let userGuess = document.getElementById('user-guess');
   //add functionality to guess function here
 
   // only set hidden fields if they are empty.
-  if (!answer.value && !attempt.value) {
+  if (!answer.value && !attemptCount.value) {
     setHiddenFields();
   }
 
-  if (!validateInput(input.value)) {
+  if (!validateInput(userGuess.value)) {
     return false;
   } else {
-    attempt.value++;
+    attemptCount.value = (number(attemptCount.value) + 1).toString();
   }
 
+  getResults(userGuess.value);  
 }
 
 //implement new functions here
@@ -28,7 +29,7 @@ function setHiddenFields() {
     answer = '0' + answer;
   }
 
-  attempt.value = 0;
+  attemptCount.value = 0;
 }
 
 function setMessage(message) {
@@ -43,7 +44,7 @@ function validateInput(val) {
   return false;
 }
 
-function getResults(input) {
+function getResults(userGuess) {
 
   // result string example:
   /*
@@ -58,23 +59,24 @@ function getResults(input) {
 </div>
 */
 
-  let resultString = '<div class="row"><span class="col-md-6">' + input + '</span><div class="col-md-6">';
+  let resultString = '<div class="row"><span class="col-md-6">' + userGuess + '</span><div class="col-md-6">';
   let resultGlyph = '';
   let correctCounter = 0;
 
-  for (var i = 0; i < input.length; i++) {
-    if (answer.value.indexOf(input[i] != -1)) {
+  for (var i = 0; i < userGuess.length; i++) {
+    if (answer.value.indexOf(userGuess[i] != -1)) {   // one of the numbers in the code exists. But where? ...
       resultGlyph = '<span class="glyphicon glyphicon-transfer"></span>';
-      if (answer.value[i] == input[i]) {
+      if (answer.value[i] == userGuess[i]) {
         resultGlyph = '<span class="glyphicon glyphicon-ok"></span>';
         correctCounter++;
       }
     } else {
       resultGlyph = '<span class="glyphicon glyphicon-remove"></span>';
     }
+    resultString += resultGlyph;
   }
 
-  resultString += resultGlyph + '</div></div>'
+  resultString += '</div></div>'
   document.getElementById('results').innerHTML += resultString;
   if (correctCounter == 4) {
     return true;
