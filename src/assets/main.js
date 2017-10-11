@@ -13,22 +13,27 @@ function guess() {
   if (!validateInput(userGuess.value)) {
     return false;
   } else {
-    attemptCount.value = (number(attemptCount.value) + 1).toString();
+    attemptCount.value = (Number(attemptCount.value) + 1).toString();
   }
 
-  getResults(userGuess.value);  
+  if (getResults(userGuess.value) == true) {
+    setMessage("You Win! :)");
+  } else if (attemptCount.value == 10) {
+    setMessage("You Lose! :(");
+  } else {
+    setMessage("Incorrect, try again.");
+  }
 }
 
 //implement new functions here
 function setHiddenFields() {
   answer.value = Math.floor(Math.random() * 10000).toString();
-
+  
   // make sure answer is always 4 'digits' long, even padded with zeros
   // if necessary
-  while (answer.length < 4) {
-    answer = '0' + answer;
+  while (answer.value.length < 4) {
+    answer.value = '0' + answer.value;
   }
-
   attemptCount.value = 0;
 }
 
@@ -45,26 +50,25 @@ function validateInput(val) {
 }
 
 function getResults(userGuess) {
-
-  // result string example:
-  /*
-  <div class="row">
-  <span class="col-md-6">0123</span>
-  <div class="col-md-6">
-    <span class="glyphicon glyphicon-remove"></span>
-    <span class="glyphicon glyphicon-ok"></span>
-    <span class="glyphicon glyphicon-remove"></span>
-    <span class="glyphicon glyphicon-remove"></span>
-  </div>
-</div>
-*/
+  /** result string example:
+   *
+   * <div class="row">
+   * <span class="col-md-6">0123</span>
+   * <div class="col-md-6">
+   *   <span class="glyphicon glyphicon-remove"></span>
+   *   <span class="glyphicon glyphicon-ok"></span>
+   *   <span class="glyphicon glyphicon-remove"></span>
+   *   <span class="glyphicon glyphicon-remove"></span>
+   * </div>
+   * </div>
+   */
 
   let resultString = '<div class="row"><span class="col-md-6">' + userGuess + '</span><div class="col-md-6">';
   let resultGlyph = '';
   let correctCounter = 0;
 
   for (var i = 0; i < userGuess.length; i++) {
-    if (answer.value.indexOf(userGuess[i] != -1)) {   // one of the numbers in the code exists. But where? ...
+    if (answer.value.indexOf(userGuess[i]) != -1) {   // one of the numbers in the code exists. But where? ...
       resultGlyph = '<span class="glyphicon glyphicon-transfer"></span>';
       if (answer.value[i] == userGuess[i]) {
         resultGlyph = '<span class="glyphicon glyphicon-ok"></span>';
@@ -76,11 +80,13 @@ function getResults(userGuess) {
     resultString += resultGlyph;
   }
 
-  resultString += '</div></div>'
+  resultString += '</div></div>';
   document.getElementById('results').innerHTML += resultString;
   if (correctCounter == 4) {
+    /** win detected */
     return true;
   } 
+  // keep trying
   return false;
   
 }
