@@ -17,11 +17,14 @@ function guess() {
   }
 
   if (getResults(userGuess.value) == true) {
-    setMessage("You Win! :)");
+      setMessage("You Win! :)");
+      showAnswer(true);
+      showReplay();
   } else if (attemptCount.value == 10) {
-    setMessage("You Lose! :(");
+      setMessage("You Lose! :(");
+      showReplay();
   } else {
-    setMessage("Incorrect, try again.");
+      setMessage("Incorrect, try again.");
   }
 }
 
@@ -122,3 +125,11 @@ function showReplay() {
   document.getElementById('guessing-div').style.display = 'none';
   document.getElementById('replay-div').style.display = 'block';
 }
+
+/**
+ * When a player wins in addition to setMessage call, they should 
+ * also call showAnswer passing true for it's parameter, and finally 
+ * make a call to showReplay. When the player loses they should call 
+ * showAnswer with false for the parameter and then showReplay
+ */
+
