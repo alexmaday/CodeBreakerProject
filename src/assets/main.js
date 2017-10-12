@@ -111,3 +111,14 @@ function showAnswer(gameWon) {
     codeLabel.classList.add('failure');
   }
 }
+
+/**
+ * showReplay takes no parameters. This function will
+ * change the style.display of guessing-div to none and the 
+ * style.display of the replay-div  to block making it so the user 
+ * can start over after they win or lose the game.
+ */
+function showReplay() {
+  document.getElementById('guessing-div').style.display = 'none';
+  document.getElementById('replay-div').style.display = 'block';
+}
