@@ -90,3 +90,24 @@ function getResults(userGuess) {
   return false;
   
 }
+
+/**
+ * Create a function showAnswer that has one parameter. This function 
+ * should set the innerHTML of the code label to the value of the 
+ * answer hidden input. In addition to this it should take the parameter 
+ * as a true or false (indicating if the player won or lost) if the 
+ * parameter is true add success to code's className otherwise it should 
+ * add failure. (note the space before success and failure)
+ */
+function showAnswer(gameWon) {
+
+  var codeLabel = document.getElementById('code');
+  codeLabel.innerHTML = '<strong>' + answer.value + '</strong>';
+  if (gameWon) {
+    // add success class to code label
+    codeLabel.classList.add('success');
+  } else {
+    // add lost failure class
+    codeLabel.classList.add('failure');
+  }
+}
