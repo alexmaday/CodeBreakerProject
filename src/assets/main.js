@@ -105,7 +105,8 @@ function getResults(userGuess) {
 function showAnswer(gameWon) {
 
   var codeLabel = document.getElementById('code');
-  codeLabel.innerHTML = '<strong>' + answer.value + '</strong>';
+  // codeLabel.innerHTML = '<strong>' + answer.value + '</strong>';
+  codeLabel.innerHTML = answer.value;
   if (gameWon) {
     // add success class to code label
     codeLabel.classList.add('success');
